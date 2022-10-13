@@ -10,37 +10,45 @@
     <main>
 <form accept-charset="utf-8"> <!-- дані для введення -->
     <fieldset>
-    Прізвище 
-    <input type="text" maxlength="20" > <br/><!-- дані для введення прізвища -->
-    Ім'я 
-    <input type="text" maxlength="20" ><br/><!-- дані для введення ім'я -->
-    По-батькові
-    <input type="text" maxlength="20"><br/> <!-- дані для введення по-батькові -->
+        <legend>Введіть основу інформацію про вчителя</legend>
+
+    
+    <input type="text" maxlength="20" id="surname" > <!-- дані для введення прізвища -->
+    <label for="surname">Прізвище</label> <br/>
+    
+    <input type="text" maxlength="20" id ="name" ><!-- дані для введення ім'я -->
+    <label for="name">Ім'я</label> <br/>
+    
+    <input type="text" maxlength="20" id="secondname" > <!-- дані для введення по-батькові -->
+    <label for="secondname">По-батькові</label> <br/>
     <select name="selection" >
         <option disabled>Стать</option><!-- дані для введення статі -->
-            <option value="Жіночий">Жіночий</option>
-            <option value="Чоловій">Чоловій</option>
+            <option value="Жіночий">Жіноча</option>
+            <option value="Чоловій">Чоловіча</option>
             <option value="Інше">Інше</option>
         </select>
         <br>
-
-        Email:
-        <input type="email"  name="email" > <br/><!-- дані для введення поштової скриньки -->
-        Дата народження
-    <input type="date" name="datee"> <!-- дані для введення дати народження -->
+    </fieldset>
+    <fieldset>
+        <legend>Введіть додаткову інформацію</legend>
+        <label for="email">Email</label>
+        <input type="email"  name="email" id="email" > <br/><!-- дані для введення поштової скриньки -->
+        <label for="datee">Дата народження</label>
+    <input type="date" name="datee" id="datee"> <!-- дані для введення дати народження -->
     <br/> 
-    Бажаний фон
-       <input type="color"   > <br/><!-- вибір фону -->
-       Країна:
-       <input type="text" maxlength="20" > <br/><!-- введення міста -->
-       Місто:
-       <input type="text" maxlength="20" > <br/><!-- введення коментаря -->
-       Коментар <br/>
-       <textarea name="textcomment" ></textarea><br>
-       <input class="save" type="button" value="Зберегти">
-    
+
+    <label for="backcolor">Бажаний фон </label>
+       <input type="color" id="backcolor"  > <br/><!-- вибір фону -->
+       <label for="country"> Країна:</label>
+       <input type="text" maxlength="20" id="country" > <br/><!-- введення міста -->
+       <label for="town"> Місто:</label>
+       <input type="text" maxlength="20" id="town" > <br/><!-- введення коментаря -->
+      <label for="textcomment">Коментар </label> <br/>
+       <textarea name="textcomment" id="textcomment" ></textarea><br>
+       <input type="submit" value="Зберегти">
     
     </fieldset>
+   
     
     </form>
 </main>
