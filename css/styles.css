@@ -30,18 +30,26 @@ body {
   }
 
   .header {
+   
     
+   
     
   }
   .menu-list {
   
-    display:block;   
-    float:left;   
+    display: flex;
+  flex-flow: row wrap;
+  
+  
+  list-style: none;
+  margin: 0; 
+ 
 }
 .menu-item{
     display: inline;
 }
 .menu-item a{
+  display: block;
  font-size: 18px; 
  color: #f75c49;
  text-decoration: none;
@@ -50,6 +58,10 @@ body {
 }
 .menu-item a:hover{
     color: #cc4836;
+}
+
+.menu-add-info{
+  display: block;
 }
 
 .h1-thing h1{
@@ -62,10 +74,9 @@ body {
    float:right
 }
 .search-input{
-    position:  relative;
-    bottom:45px;
-    display: inline-flexbox;
-    float:right
+  
+   
+   
 }
   
   .columnside {
@@ -230,6 +241,9 @@ body {
     height:30px;
    
 }
+.main{
+  display:grid;
+}
 .logo h2{
     
     display: inline-flex;
@@ -316,9 +330,10 @@ figure span:hover {
 }
 
 .firstHeader{
-    display: flexbox;
+    display: flex;
     justify-content: space-between;
-    float: left;
+    
+    
     width: 100%;
     
     align-items: baseline;
@@ -326,14 +341,55 @@ figure span:hover {
 }
 .secondHeader{
    
-    display: flexbox;
+    display: flex;
     justify-content: space-between;
-    float: left;
+   
     width: 100%;
    align-items: baseline;
 }
-container{
-    display: flexbox;
+.flex-container{
+    
+  display: flex;
+
+  flex-flow: row wrap;
+  
+ 
+
+  padding: 0;
+  margin: 0;
+  
+}
+.flex-item {
+  
+  padding: 5px;
+ 
+  margin-top: 10px;
+  line-height: 150px;
+  
+  font-weight: bold;
+  
+  text-align: center;
+}
+.arrow-left {
+  width: 0; 
+  height: 0; 
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent; 
+  
+  border-right:10px solid rgb(0, 0, 0); 
+  display: inline-block;
+  margin-bottom: 125px;
+}
+
+.arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent; 
+  
+  border-left:10px solid rgb(0, 0, 0); 
+  display: inline-block;
+  margin-bottom: 125px;
 }
 
 
@@ -523,7 +579,9 @@ textarea{
 */
 
 
-
+figcaption p{
+  margin:2px;
+}
 
 .popupTeacher>div>img {
   padding-top: 1%;
@@ -539,16 +597,16 @@ textarea{
     background-color: lightgreen;
   }
   .firstHeader{
-    display: inline-grid;
+   
     float: left;
    
   }
   .secondHeader{
-    display: inline-grid;
+   
     float: left;
   }
   .logo{
-    display:inline-grid;
+   
     float: left;
   }
   .search-input{
