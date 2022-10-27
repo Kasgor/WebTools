@@ -9,45 +9,42 @@
 <body>
     <main>
 <form accept-charset="utf-8"> <!-- дані для введення -->
-    <fieldset>
-        <legend>Введіть основу інформацію про вчителя</legend>
+
 
     
-    <input type="text" maxlength="20" id="surname" > <!-- дані для введення прізвища -->
-    <label for="surname">Прізвище</label> <br/>
+    <input type="text" maxlength="20" id="name" > <!-- дані для введення прізвища -->
+    <label for="name">Name</label> <br/>
     
-    <input type="text" maxlength="20" id ="name" ><!-- дані для введення ім'я -->
-    <label for="name">Ім'я</label> <br/>
+    <input type="text" maxlength="20" id ="Speciality" ><!-- дані для введення ім'я -->
+    <label for="Speciality">Speciality</label> <br/>
     
-    <input type="text" maxlength="20" id="secondname" > <!-- дані для введення по-батькові -->
-    <label for="secondname">По-батькові</label> <br/>
-    <select name="selection" >
-        <option disabled>Стать</option><!-- дані для введення статі -->
-            <option value="Жіночий">Жіноча</option>
-            <option value="Чоловій">Чоловіча</option>
-            <option value="Інше">Інше</option>
-        </select>
-        <br>
-    </fieldset>
-    <fieldset>
-        <legend>Введіть додаткову інформацію</legend>
+    <input type="text" maxlength="20" id="Country" > <!-- дані для введення по-батькові -->
+    <label for="Country">Country</label> <br/>
+    <input type="text" maxlength="20" id="City" > <!-- дані для введення по-батькові -->
+    <label for="City">City</label> <br/>
+    
+    
+
         <label for="email">Email</label>
         <input type="email"  name="email" id="email" > <br/><!-- дані для введення поштової скриньки -->
-        <label for="datee">Дата народження</label>
+        <label for="phone">Phone</label>
+        <input type="phone"  name="phone" id="phone" > <br/><!-- дані для введення поштової скриньки -->
+        <label for="datee">Data of birth</label>
     <input type="date" name="datee" id="datee"> <!-- дані для введення дати народження -->
     <br/> 
-
-    <label for="backcolor">Бажаний фон </label>
+    <input type="radio" id="male" name="male">
+    <label for="male">Male</label> 
+    <input type="radio" id="female" name="female">
+    <label for="female">Female</label> 
+        <br>
+    <label for="backcolor">Background color </label>
        <input type="color" id="backcolor"  > <br/><!-- вибір фону -->
-       <label for="country"> Країна:</label>
-       <input type="text" maxlength="20" id="country" > <br/><!-- введення міста -->
-       <label for="town"> Місто:</label>
-       <input type="text" maxlength="20" id="town" > <br/><!-- введення коментаря -->
-      <label for="textcomment">Коментар </label> <br/>
+       
+       
+      <label for="textcomment">Notes </label> <br/>
        <textarea name="textcomment" id="textcomment" ></textarea><br>
        <input type="submit" value="Зберегти">
-    
-    </fieldset>
+
    
     
     </form>
