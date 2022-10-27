@@ -395,7 +395,7 @@ figure span:hover {
 
 
 .flexInput{
-    display: flexbox;
+   
     justify-content: space-between;
     float: left;
     width: 80%;
@@ -406,17 +406,17 @@ figure span:hover {
 
 }
 .row1{
-    display: flexbox;
+   
     float:left;
 }
 .row2{
-    display: flexbox;
+    
     float:right;
    
 }
 
 .addTeacher{
-    display: flexbox;
+   
     padding-left:30px ;
     padding-top:10px ;
 }
