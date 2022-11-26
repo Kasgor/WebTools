@@ -14,10 +14,12 @@
    <section class="firstHeader">
         
             <div class="logo flex-item"><h2 style="padding-bottom:20px;">Teachinder</h2></div>
-            <form class="flex-item">
+            <form class="flex-item" id="search-form-submitt" >
                 <div class="search-input" >
-                    <input class="search-form" type="text" name="note" placeholder="Comment" >
-                    <button class="search-form-submit" type="submit" style="margin-bottom: 0px ;">Search</button>
+                    <input class="search-form" id="search-form" type="text" name="note" placeholder="Comment" >
+                    
+                    <button class="search-form-submit" onclick="location.href='#popup2';"   type="submit" style="margin-bottom: 0px ;">Search</button>
+               
                 </div>
             </form>
         </section>
@@ -68,18 +70,23 @@
         <div class="select-thing">
                     <label for="filterAge" class="option-age">Age</label>
                     <select name="filterAge" id="filterAge" class="option-input-age">
-                        <option value="18-31" selected>18-31</option>
-                        <option value="31-60" >31-60</option>
-                        <option value="60+" >60+</option>
+                        <option value="31" selected>31</option>
+                        <option value="60" >60</option>
+                        <option value="61" >61</option>
+                        <option value="62" >62</option>
+                        <option value="63" >63</option>
+                        <option value="64" >64  </option>
+                        <option value="65" >65</option>
                     </select>
                     <span>|</span>
            </div>
 <div class="select-thing">
                     <label for="filterRegion" class="option-region">Region</label>
                     <select name="filterRegion" id="filterRegion" class="option-input-region">
-                        <option value="Europe" selected>Europe</option>
-                        <option value="America" >America</option>
-                        <option value="Asia" >Asia</option>
+                        <option value="Germany" selected>Germany</option>
+                        <option value="Spain" >Spain</option>
+                        <option value="Finland" >Finland</option>
+                        <option value="Iran" >Iran</option>
                     </select>
                     <span>|</span>
            </div>
@@ -87,19 +94,19 @@
             <label for="filterSex" class="option-sex">Gender</label>
             <select name="filterSex" id="filterSex" class="option-input-region">
                 <option value="All" selected>All</option>
-                <option value="America" >Male</option>
-                <option value="Asia" >Fema</option>
+                <option value="male">male</option>
+                <option value="female" >female</option>
             </select>
             <span>|</span>
    </div>
    <div class="select-thing">
-    <input id="filterPhoto" class="options-input-checkbox" type="checkbox" name="favorite">
-    <label for="filterFavorite" class="option-checkbox">Only with photo</label>
+    <input id="filterPhoto" class="options-input-checkbox" onclick="checkPhoto(event)" type="checkbox" name="favorite">
+    <label for="filterPhoto" class="option-checkbox">Only with photo</label>
     <span>|</span>
 </div>
 
    <div class="select-thing">
-    <input id="filterFavorite" class="options-input-checkbox" type="checkbox" name="favorite">
+    <input id="filterFavorite" class="options-input-checkbox" onclick="checkFav(event)" type="checkbox" name="favorite">
     <label for="filterFavorite" class="option-checkbox">Only favorites</label>
 </div>
 
@@ -108,7 +115,7 @@
             </div>
         </section>
        
-       
+   <section id="aLotOfImages">  
         <figure><div  class="images">
             <a href="#popup2">
         <img src="images/face.png" alt="Зображення викладача" class="imageFace" />
@@ -216,7 +223,7 @@
 
     </figure>
    
-    
+</section>  
         <!-- TODO Thing with photos -->
         <!-- TODO Thing with photos -->
         <!-- TODO Thing with photos -->
@@ -229,7 +236,7 @@
             <a class="close" href="#">&times;</a>
             <div class="content">
                 <container>
-                <form accept-charset="utf-8"> <!-- дані для введення -->
+                <form accept-charset="utf-8" id="popup11"> <!-- дані для введення -->
 
 
                   
@@ -332,7 +339,7 @@
        <p> <h1>Statistics</h1></p>
     </div>
     <div class="table">
-    <table class="main-table">
+    <table class="main-table" id="megatable">
         <thead>
           <tr>
             <th>Name</th>
@@ -342,13 +349,14 @@
             <th>Nationality</th>
           </tr>
         </thead>
+       
         <tbody>
           <tr> 
             <td>щось</td>
             <td>щось</td>
             <td>щось</td>
             <td>щось</td>
-            <td>щось</td>
+            <td>щсь</td>
           </tr>
         </tbody>
         <tbody>
@@ -441,19 +449,20 @@
               <td>щось</td>
             </tr>
           </tbody>
+        
         </table>
         <p><a href="#">1</a> <a href="#">2</a> <a href="#">3</a> ... <a href="#">Last</a></p>
     </div>
 </section>
 <hr>
-<section class="favorites">
+<section class="favorites" >
     <div class="h1-thing">
         <h1>Favorites</h1>
     </div>
     <div class="arrow-left"></div>
     <div class="arrow-left" style="position: relative; right: 8px; border-right-color:white ; margin-right: -15px;" ></div>
     
-
+<div id="favvv" style="display: inline;">
     <figure class="figure2"><div  class="images">
         <a href="#popup2">
         <img src="images/face.png" alt="Зображення викладача" class="imageFace" />
@@ -521,6 +530,7 @@
     </figcaption>
 
     </figure>
+</div>
     <div class="arrow-right" style="position: relative; left: 8px; border-left-color:rgb(255, 255, 255) ;margin-left: -20px;" ></div>
     <div class="arrow-right"></div>
     
@@ -581,6 +591,9 @@
         </div>
         <a href="#popup1"><button  id="testttt" class="search-form-submit">Add teacher</button></a>
     </footer>
+    <script   src="../WebTools/js/FE4U-Lab3-mock(2).js"></script>
+    <script  src="../WebTools/js/lab3.js"></script>
+<script  src="../WebTools/js/formUsers.js"></script>
 
 </div>
 </body>
