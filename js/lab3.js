@@ -73,7 +73,7 @@ function isUserValid(user){
 }
 
 function FilterUsersGender(users, filterTriger){
-	return users.filter(user => user.gender.includes(filterTriger));
+	return users.filter(user => user.gender==filterTriger);
 
 }
 function FilterUsersCountry(users, filterTriger){
@@ -203,7 +203,7 @@ function GetPercentItemsSearch(users, opts) {
 }
 
 
-module.exports = {
+/*export  {
 	
 	usersFormatting,
 	usersUnique,
@@ -236,3 +236,4 @@ module.exports = {
 	
 	GetPercentItemsSearch,
 };
+*/

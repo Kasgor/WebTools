@@ -87,4 +87,4 @@ console.log("----------------------------------------");
 //console.log(SearchUser1(res, 65));
 //console.log(SearchUser1(res, "old lady with a cats"));
 
-console.log(GetPercentItemsSearch(res, {age: 70}))
+console.log(GetPercentItemsSearch(res, {age: 65}))
