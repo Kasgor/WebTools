@@ -29,7 +29,7 @@ const createUser = (oldUser, index) => {
 		phone: getData('phone'),
 		picture_large: getData('picture_large') || getData('picture', 'large'),
 		picture_thumbnail: getData('picture_thumbnail') || getData('picture', 'medium'),
-		favorite: getData('favorite'),
+		favorite: getData('favorite')||false,
 		course: getData('course') || courses[Math.floor(Math.random()*courses.length)],
 		bg_color: getData('bg_color'),
 		note: getData('note'),
@@ -174,7 +174,7 @@ function sortUsersBirthDown(users){
 
 
 function SearchUser1(users, input){
-	return users.find(user => user.full_name===input||user.age===input||user.note===input);
+	return users.find(user => user.full_name===input||parseInt(user.age)===input||user.note===input);
 
 }
 

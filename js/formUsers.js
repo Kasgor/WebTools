@@ -122,14 +122,67 @@ function getUserTemplate(user) {
   }
 
 let teachers =document.getElementById("aLotOfImages");
+var allUsers;
 
-  
   //document.getElementById('aLotOfImages').innerHtml = res.map(getUserTemplate).join('');
-  let k = res.map(getUserTemplate).join('');
-  document.getElementById('aLotOfImages').innerHTML=k;
-let favteachers = document.getElementById("favvv");
+  //let k = res.map(getUserTemplate).join('');
+  //let k = getRandomUsers();//.map(getUserTemplate).join('');
+  //console.log(k);
+  //document.getElementById('aLotOfImages').innerHTML=k;
 
+  allUsers=getRandomUsers().then();
+  console.log(allUsers);
+  
+  
+  async function  getRandomUsers(){
+    const url = 'https://randomuser.me/api/?results=50';
+  
+    let users = await fetch(url)
+    .then((resp) => resp.json())
+    .then(function(data) {
+     
+      let authors = data.results;
+      
+      let users = usersFormatting([...authors])
+     
+     let allUsers=users;
+     
+     users= users.map(getUserTemplate).join("");
+     document.getElementById('aLotOfImages').innerHTML=users;
+     return allUsers;
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+   // console.log(users);
+    return users;
+    
+   
+    }
+/*async function setUpUsers() {
+  await getRandomUsers()
+      .then(async (users) => {
+        allUsers=users;
+        users= users.map(getUserTemplate).join("");
+        document.getElementById('aLotOfImages').innerHTML=users;
+     });
+  }*/
+    
+    
+
+let favteachers = document.getElementById("favvv");
+favorite();
 //favs
+async function favorite(){
+await allUsers
+.then(function(data){
+  console.log(data);
+  const fav = FilterUsersfavorite(data);
+  console.log(fav);
+let favv = fav.map(getUserFavTemplate).join('');
+document.getElementById("favvv").innerHTML=favv;
+})
+}
 const fav = FilterUsersfavorite(re);
 let favv = fav.map(getUserFavTemplate).join('');
 document.getElementById("favvv").innerHTML=favv;
@@ -139,9 +192,9 @@ var ageSelect = document.querySelector('#filterAge');
 ageSelect.addEventListener('change', (e)=>{
     var age = parseInt(ageSelect.value);
     
-    var j = FilterUsersAge(re, age);
+    var j = FilterUsersAge(data, age);
     console.log(j);
-    console.log(FilterUsersAge(res, age));
+    console.log(FilterUsersAge(data, age));
     k=j.map(getUserTemplate).join('');
     document.getElementById('aLotOfImages').innerHTML=k;
 
@@ -153,9 +206,9 @@ var regSelect = document.querySelector('#filterRegion');
 regSelect.addEventListener('change', (e)=>{
     var region = regSelect.value;
     
-    var j = FilterUsersCountry(re, region);
+    var j = FilterUsersCountry(data, region);
     console.log(j);
-    console.log(FilterUsersCountry(res, region));
+   // console.log(FilterUsersCountry(res, region));
     k=j.map(getUserTemplate).join('');
     document.getElementById('aLotOfImages').innerHTML=k;
 
@@ -168,14 +221,14 @@ var genderSelect = document.querySelector('#filterSex');
 genderSelect.addEventListener('change', (e)=>{
     var gen = genderSelect.value;
     if(gen!="All"){
-    var j = FilterUsersGender(re, gen);
+    var j = FilterUsersGender(data, gen);
     console.log(j);
-    console.log(FilterUsersGender(res, gen));
+   // console.log(FilterUsersGender(res, gen));
     k=j.map(getUserTemplate).join('');
     document.getElementById('aLotOfImages').innerHTML=k;
 }
 else{
-    let k = res.map(getUserTemplate).join('');
+    let k = data.map(getUserTemplate).join('');
     document.getElementById('aLotOfImages').innerHTML=k;
 }
 
@@ -188,11 +241,11 @@ function checkPhoto(event){
   const isChecked =event.target.checked;
   if (isChecked)
 {
-  let k = res.map(getUserTemplatePhoto).join('');
+  let k = data.map(getUserTemplatePhoto).join('');
 document.getElementById('aLotOfImages').innerHTML=k;
 }
 else{
-  let k = res.map(getUserTemplate).join('');
+  let k = data.map(getUserTemplate).join('');
   document.getElementById('aLotOfImages').innerHTML=k;
 }
 }
@@ -202,18 +255,19 @@ function checkFav(event){
   var checkboxPhoto = document.getElementById('filterFavorite');
   console.log(checkboxPhoto);
   const isChecked =event.target.checked;
-  const resfav = FilterUsersfavorite(res)
+  const resfav = FilterUsersfavorite(data)
   if (isChecked)
 {
   let k = resfav.map(getUserTemplate).join('');
 document.getElementById('aLotOfImages').innerHTML=k;
 }
 else{
-  let k = res.map(getUserTemplate).join('');
+  let k = data.map(getUserTemplate).join('');
   document.getElementById('aLotOfImages').innerHTML=k;
 }
 }
 //table
+/*
 let kk =`<thead>
 <tr>
   <th onclick="sortNamee()">Name</th>
@@ -269,6 +323,77 @@ let r = sortUsersCountryUp(re);
 kk+=r.map(gettoTable).join('');
 document.getElementById('megatable').innerHTML=kk;
 }
+*/
+document.addEventListener('DOMContentLoaded', init, false);
+
+let data, table, sortCol;
+let sortAsc = false;
+const pageSize = 10;
+let curPage = 1;
+
+async function init() {
+  
+  // Select the table (well, tbody)
+  table = document.querySelector('#megatable tbody');
+  // get the cats
+  //let resp = await fetch(allUsers);
+  data = await allUsers;
+  renderTable();
+  
+  // listen for sort clicks
+  document.querySelectorAll('#megatable thead tr th').forEach(t => {
+     t.addEventListener('click', sort, false);
+  });
+  
+  document.querySelector('#nextButton').addEventListener('click', nextPage, false);
+  document.querySelector('#prevButton').addEventListener('click', previousPage, false);
+}
+
+function renderTable() {
+  // create html
+  let result = '';
+  data.filter((row, index) => {
+        let start = (curPage-1)*pageSize;
+        let end =curPage*pageSize;
+        if(index >= start && index < end) return true;
+  }).forEach(user => {
+     result += `
+     <tr> 
+       <td>${user.full_name}</td>
+       <td>${user.course}</td>
+       <td>${user.age}</td>
+       <td>${user.gender}</td>
+       <td>${user.country}</td>
+     </tr>
+   `
+  });
+  table.innerHTML = result;
+}
+
+function sort(e) {
+  let thisSort = e.target.dataset.sort;
+  if(sortCol === thisSort) sortAsc = !sortAsc;
+  sortCol = thisSort;
+  console.log('sort dir is ', sortAsc);
+  data.sort((a, b) => {
+    if(a[sortCol] < b[sortCol]) return sortAsc?1:-1;
+    if(a[sortCol] > b[sortCol]) return sortAsc?-1:1;
+    return 0;
+  });
+  renderTable();
+}
+
+function previousPage() {
+  if(curPage > 1) curPage--;
+  renderTable();
+}
+
+function nextPage() {
+  if((curPage * pageSize) < data.length) curPage++;
+  renderTable();
+}
+
+
 
 
 //maybe search
@@ -280,7 +405,8 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
  // console.log(form[0].value);
  // console.log(SearchUser1(res, form[0].value));
-  let r =SearchUser1(res, form[0].value);
+ console.log(form[0].value);
+  let r =SearchUser1(data, form[0].value);
   console.log(r);
   let rr = popup(r);
 
@@ -293,7 +419,8 @@ const formAdd  = document.getElementById('popup11');
 console.log(formAdd);
 formAdd.addEventListener('submit', (event) => {
   event.preventDefault();
-  user={
+  const user=[
+    {
     gender: "male",
     title: "Mr",
     full_name: formAdd[0].value,
@@ -307,15 +434,32 @@ formAdd.addEventListener('submit', (event) => {
     b_day: formAdd[6].value,
     phone: formAdd[5].value,
     picture_large: "images/face.png",
-    id: "fgesrg456dsf234c1",
+   
     favorite: true,
     course: formAdd[1].value,
     bg_color: formAdd[9].value,
     note: formAdd[10].value,
-  };
-
-  res.push(user);
-  re.push(user);
+  
+  },
+];
+postData('http://localhost:3000/users', user);
+async function postData(url = 'http://localhost:3000/users', data = {}) {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  return response.json()
+}
+console.log(user);
+  //user1 = 
+const userr=usersFormatting([...user])
+console.log(userr[0]);
+  res.push(userr[0]);
+  
+  re.push(userr);
   
 
   let k = res.map(getUserTemplate).join('');
@@ -364,8 +508,8 @@ const popupImages = document.querySelector('#aLotOfImages');
 popupImages.addEventListener('click', (event) =>{
  
   let userId = event.target.getAttribute("data-id");
-  console.log(event.target.getAttribute("data-id"));
-  let user = res.find(user => user.id==userId);
+  //console.log(event.target.getAttribute("data-id"));
+  let user = data.find(user => user.id==userId);
   let y = popup(user);
   document.getElementById('popup2').innerHTML =y; 
 });
