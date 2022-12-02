@@ -129,16 +129,12 @@ var allUsers;
 //document.getElementById('aLotOfImages').innerHTML=k;
 
 allUsers = getRandomUsers().then();
+console.log(allUsers);
 
-
-
-
-
-
- function getRandomUsers() {
+async function getRandomUsers() {
   const url = "https://randomuser.me/api/?results=50";
 
-  let users = fetch(url)
+  let users = await fetch(url)
     .then((resp) => resp.json())
     .then(function (data) {
       let authors = data.results;
@@ -169,11 +165,11 @@ allUsers = getRandomUsers().then();
 let favteachers = document.getElementById("favvv");
 favorite();
 //favs
-function favorite() {
- allUsers.then(function (data) {
-   
+async function favorite() {
+  await allUsers.then(function (data) {
+    console.log(data);
     const fav = FilterUsersfavorite(data);
-    
+    console.log(fav);
     let favv = fav.map(getUserFavTemplate).join("");
     document.getElementById("favvv").innerHTML = favv;
   });
@@ -188,8 +184,8 @@ ageSelect.addEventListener("change", (e) => {
   var age = parseInt(ageSelect.value);
 
   var j = FilterUsersAge(data, age);
-  
-  
+  console.log(j);
+  console.log(FilterUsersAge(data, age));
   k = j.map(getUserTemplate).join("");
   document.getElementById("aLotOfImages").innerHTML = k;
 });
@@ -201,7 +197,7 @@ regSelect.addEventListener("change", (e) => {
   var region = regSelect.value;
 
   var j = FilterUsersCountry(data, region);
-  ;
+  console.log(j);
   // console.log(FilterUsersCountry(res, region));
   k = j.map(getUserTemplate).join("");
   document.getElementById("aLotOfImages").innerHTML = k;
@@ -215,7 +211,7 @@ genderSelect.addEventListener("change", (e) => {
   var gen = genderSelect.value;
   if (gen != "All") {
     var j = FilterUsersGender(data, gen);
-   
+    console.log(j);
     // console.log(FilterUsersGender(res, gen));
     k = j.map(getUserTemplate).join("");
     document.getElementById("aLotOfImages").innerHTML = k;
@@ -228,7 +224,7 @@ genderSelect.addEventListener("change", (e) => {
 //photo
 function checkPhoto(event) {
   var checkboxPhoto = document.getElementById("filterPhoto");
-  
+  console.log(checkboxPhoto);
   const isChecked = event.target.checked;
   if (isChecked) {
     let k = data.map(getUserTemplatePhoto).join("");
@@ -242,7 +238,7 @@ function checkPhoto(event) {
 //only favs
 function checkFav(event) {
   var checkboxPhoto = document.getElementById("filterFavorite");
- 
+  console.log(checkboxPhoto);
   const isChecked = event.target.checked;
   const resfav = FilterUsersfavorite(data);
   if (isChecked) {
@@ -318,12 +314,12 @@ let sortAsc = false;
 const pageSize = 10;
 let curPage = 1;
 
- function init() {
+async function init() {
   // Select the table (well, tbody)
   table = document.querySelector("#megatable tbody");
   // get the cats
   //let resp = await fetch(allUsers);
-  data =  allUsers;
+  data = await allUsers;
   renderTable();
 
   // listen for sort clicks
@@ -366,7 +362,7 @@ function sort(e) {
   let thisSort = e.target.dataset.sort;
   if (sortCol === thisSort) sortAsc = !sortAsc;
   sortCol = thisSort;
-
+  console.log("sort dir is ", sortAsc);
   data.sort((a, b) => {
     if (a[sortCol] < b[sortCol]) return sortAsc ? 1 : -1;
     if (a[sortCol] > b[sortCol]) return sortAsc ? -1 : 1;
@@ -388,14 +384,14 @@ function nextPage() {
 //maybe search
 
 const form = document.getElementById("search-form-submitt");
-
+console.log(form);
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   // console.log(form[0].value);
   // console.log(SearchUser1(res, form[0].value));
-  
+  console.log(form[0].value);
   let r = SearchUser1(data, form[0].value);
-  
+  console.log(r);
   let rr = popup(r);
 
   document.getElementById("popup2").innerHTML = rr;
@@ -428,11 +424,11 @@ formAdd.addEventListener("submit", (event) => {
       note: formAdd[10].value,
     },
   ];
-  postData("http://localhost:3000/users", user);
- 
+ postData("http://localhost:3000/users", user);
+  console.log(user);
   //user1 =
   const userr = usersFormatting([...user]);
- 
+  console.log(userr[0]);
   res.push(userr[0]);
 
   re.push(userr);
@@ -441,8 +437,9 @@ formAdd.addEventListener("submit", (event) => {
   document.getElementById("aLotOfImages").innerHTML = k;
 });
 
- function postData(url = "http://localhost:3000/users", data = {}) {
-  const response =  fetch(url, {
+
+async function postData(url = "http://localhost:3000/users", data = {}) {
+  const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
