@@ -1,0 +1,31 @@
+{
+  "users": [
+    [
+      {
+        "gender": "male",
+        "title": "Mr",
+        "full_name": "Alex k",
+        "city": "asda",
+        "state": "Mecklenburg-Vorpommern",
+        "country": "asd",
+        "postcode": 52640,
+        "coordinates": {
+          "latitude": "-42.1817",
+          "longitude": "-152.1685"
+        },
+        "timezone": {
+          "offset": "+9:30",
+          "description": "Adelaide, Darwin"
+        },
+        "email": "alex.kompaniiets04@gmail.com",
+        "b_day": "2022-11-21",
+        "phone": "+380677708355",
+        "picture_large": "images/face.png",
+        "favorite": true,
+        "course": "afdsd",
+        "bg_color": "#fff5f5",
+        "note": "sdfsdf"
+      }
+    ]
+  ]
+}

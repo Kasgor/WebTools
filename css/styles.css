@@ -130,7 +130,7 @@ body {
     text-align: center;
     
   }
-  tbody:nth-child(odd) {
+  tr:nth-child(odd) {
     background: #f9f5f9;
   }
   .images{
