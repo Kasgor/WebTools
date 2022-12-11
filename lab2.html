@@ -5,7 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width initial-scale=1.0" />
     <link rel="stylesheet" href="css/styles.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script>dayjs().format()</script>
+<script src="loadash.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 </head>
 <body>
     <header class="header">
@@ -303,7 +310,7 @@
         </div>
     </div>
     <div id="popup2" class="overlayTeacher">
-        <div class="popupTeacher">
+        <div class="popupTeacher" id="popupTeacher">
             <div>
                 <h2 id="heading">Teacher info</h2>
                  <a class="close" href="#">&times;</a>
@@ -329,35 +336,27 @@
                     eros.
                     
                 </p>
-                <p><a id="googleMaps" href="https://www.google.com/maps">toogle map</a></p>
+                
+
                
             </section>
         </div>
+        <div id="map" style="width: 30%; height: 200px;margin: auto;
+       
+        
+        padding: 10px;"></div>
     </div>
+    <div style="margin: auto;
+        width: 30%;
+        height: 200px;
+        padding: 10px;" id="map" style="width: 600px; height: 400px;"></div>
     <hr>
     <div class="h1-thing">
        <p> <h1>Statistics</h1></p>
     </div>
-    <div class="table">
-    <table class="main-table" id="megatable">
-       
-        <thead>
-            <tr>
-              <th data-sort="full_name">Name</th>
-              <th data-sort="course">Speciality</th>
-              <th data-sort="age">Age</th>
-              <th data-sort="gender">Gender</th>
-              <th data-sort="country">Nationality</th>
-            </tr>
-          </thead>
-       
-        <tbody>
-          
-          </tbody>
-        
-        </table>
-        <button id="prevButton">Previous</button> 
-<button id="nextButton">Next</button>
+    <div class="chartBox">
+        <canvas id="myChart"></canvas>
+        </div>
         <!--<p><a href="#">1</a> <a href="#">2</a> <a href="#">3</a> ... <a href="#">Last</a></p>-->
     </div>
 </section>
@@ -501,6 +500,15 @@
     <script   src="../WebTools/js/FE4U-Lab3-mock(2).js"></script>
     <script  src="../WebTools/js/lab3.js"></script>
 <script  src="../WebTools/js/formUsers.js"></script>
+<script>
 
+	let map = L.map('map').setView([51.505, -0.09], 13);
+
+	let tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
+
+</script>
 </div>
 </body>
