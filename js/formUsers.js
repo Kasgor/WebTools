@@ -174,6 +174,7 @@ async function favorite() {
     document.getElementById("favvv").innerHTML = favv;
   });
 }
+
 const fav = FilterUsersfavorite(re);
 let favv = fav.map(getUserFavTemplate).join("");
 document.getElementById("favvv").innerHTML = favv;
@@ -306,7 +307,7 @@ let r = sortUsersCountryUp(re);
 kk+=r.map(gettoTable).join('');
 document.getElementById('megatable').innerHTML=kk;
 }
-*/
+
 document.addEventListener("DOMContentLoaded", init, false);
 
 let data, table, sortCol;
@@ -380,8 +381,66 @@ function nextPage() {
   if (curPage * pageSize < data.length) curPage++;
   renderTable();
 }
+*/
+let data;
+init();
+async function init() {
+  // Select the table (well, tbody)
+  table = document.querySelector("#megatable tbody");
+  // get the cats
+  //let resp = await fetch(allUsers);
+  data = await allUsers;
+}
+pie();
+let dataVal= Array(50);
+dataVal=_.fill(Array(50), 1);
+async function pie() {
+ 
+
+ 
+  await allUsers.then(function (data) {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    console.log(data);
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels:data.map(user=> user.full_name),
+            datasets: [{
+                label: '# of Votes',
+                data: dataVal,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+  });
+}
 
 //maybe search
+
 
 const form = document.getElementById("search-form-submitt");
 console.log(form);
@@ -425,18 +484,19 @@ formAdd.addEventListener("submit", (event) => {
     },
   ];
  postData("http://localhost:3000/users", user);
+ 
+
   console.log(user);
   //user1 =
   const userr = usersFormatting([...user]);
-  console.log(userr[0]);
+  //console.log(userr[0]);
   res.push(userr[0]);
 
   re.push(userr);
 
   let k = res.map(getUserTemplate).join("");
-  document.getElementById("aLotOfImages").innerHTML = k;
+ // document.getElementById("aLotOfImages").innerHTML = k;
 });
-
 
 async function postData(url = "http://localhost:3000/users", data = {}) {
   const response = await fetch(url, {
@@ -455,8 +515,12 @@ function popup(user) {
   if (`${user.picture_large}` === `null`) {
     user.picture_large = "images/face.png";
   }
+  console.log(user.b_date);
+  let r = daysUntilBirthday(user.b_date.substring(0, 10).replace(/^\d{4}/, dayjs().get("year")+1));
+
+
   return `  
-  <div class="popupTeacher style="visibility:visible">
+  
       <div>
           <h2 id="heading">Teacher info</h2>
            <a class="close" href="#">&times;</a>
@@ -467,7 +531,8 @@ function popup(user) {
           <h2>${user.full_name}</h2>
           <h3>${user.course}</h3>
           <h4>${user.country}</h4>
-          <h4>${user.age}, ${user.gender}</h4>
+          <h4>${user.age}, ${user.gender},  ${r}</h4>
+         
           <h4>
               <a href="mailto:oleksandr.kompaniiets@ukma.edu.ua">${user.email}</a>
           </h4>
@@ -475,12 +540,23 @@ function popup(user) {
           <p>${user.note}
               
           </p>
-          <p><a id="googleMaps" href="https://www.google.com/maps">toogle map</a></p>
-         
+          
       </section>
-  </div>
+ 
+  
 `;
+
 }
+function daysUntilBirthday(date) {
+  let birthday = dayjs(date);
+  let today = `${dayjs().get('year')}-${(dayjs().get('month') + 1)}-${dayjs().get('date')}`
+  if (birthday.isSame(dayjs())) {
+      return 'Cake!!';
+  } else {
+      return 'Days until next birthday' + ' ' + Math.abs(birthday.diff(today, 'days'));
+  }
+}
+
 
 const popupImages = document.querySelector("#aLotOfImages");
 
@@ -489,5 +565,10 @@ popupImages.addEventListener("click", (event) => {
   //console.log(event.target.getAttribute("data-id"));
   let user = data.find((user) => user.id == userId);
   let y = popup(user);
-  document.getElementById("popup2").innerHTML = y;
+  map.panTo(new L.LatLng(user.coordinatesLatitude, user.coordinatesLongitude));
+
+	
+    // Creating map options
+   
+  document.getElementById("popupTeacher").innerHTML = y;
 });
