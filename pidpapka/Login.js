@@ -1,65 +1,76 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
-import { useCookies } from 'react-cookie';
-
-import './style.css'
-
-const Login = () => {
-    const username = "Artem2"
-    const password = "111"
+import React, { useState} from "react";
+import {useNavigate} from "react-router-dom";
+import "./style.css";
+const Login = () =>{
+    const [errorMessages, setErrorMessages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
 
-    const [cookies, setCookies] = useCookies(['user'])
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (cookies.username == username && cookies.password == password) {
-            navigate("/weather")
-        }
-    }, [])
-
-    const userNamePassed = useRef(null)
-    const passwordPassed = useRef(null)
-
-
-    const [popUpStyle, showPopUp] = useState("hiding")
-
-    const errorPopUp = () => {
-        if (validate()) {
-            setCookies('username', userNamePassed.current.value, { path: "/" })
-            setCookies('password', passwordPassed.current.value, { path: "/" })
-            setCookies('isLoggedIn', true, { path: "/" })
-            navigate("/weather")
-        } else {
-            showPopUp("error-popup")
-            setTimeout(() => showPopUp("hiding")
-                , 1500)
-        }
+  const database = [
+    {
+      username: "user1",
+      password: "pass1"
+    },
+    {
+      username: "user2",
+      password: "pass2"
     }
+  ];
 
-    function validate() {
-        if (username == userNamePassed.current.value && password == passwordPassed.current.value)
-            return true
-        return false
+  const errors = {
+    uname: "invalid username",
+    pass: "invalid password"
+  };
+const navigation = useNavigate();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    var { uname, pass } = document.forms[0];
+    const userData = database.find((user) => user.username === uname.value);
+    if (userData) {
+      if (userData.password !== pass.value) {
+        setErrorMessages({ name: "pass", message: errors.pass });
+      } else {
+        setIsSubmitted(true);
+        navigation("/weather", database);
+      }
+    } else {
+      setErrorMessages({ name: "uname", message: errors.uname });
     }
+  };
+  const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+      <div className="error">{errorMessages.message}</div>
+    );
+  const renderForm = (
+    <div className="form">
+      <form onSubmit={handleSubmit}>
+        <div className="input-container">
+          <label>Username </label>
+          <input type="text" name="uname" required />
+          {renderErrorMessage("uname")}
+        </div>
+        <div className="input-container">
+          <label>Password </label>
+          <input type="password" name="pass" required />
+          {renderErrorMessage("pass")}
+        </div>
+        <div className="button-container">
+          <input type="submit" />
+        </div>
+      </form>
+    </div>
+  );
 
+  return (
+    
+    <div className="app">
+        <h1>Text</h1>
+      <div className="login-form">
+        <div className="title">Sign In</div>
+        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+      </div>
+    </div>
+  );
 
-    return (
-        <section className='loginContainer'>
-            <section className='login'>
-                <input ref={userNamePassed}
-                    type="text" placeholder='username' required></input>
-                <input ref={passwordPassed}
-                    type="password" placeholder='password' required></input>
-                <div onClick={errorPopUp} className='login-button'>Login</div>
-
-                <div className={popUpStyle}>
-                    <h3>Login Failed</h3>
-                    <h3>Username or Password is wrong!</h3>
-                </div>
-            </section>
-        </section>
-    )
 }
-
-export default Login
+export default Login;
